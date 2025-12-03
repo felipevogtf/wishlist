@@ -43,7 +43,7 @@
     });
 
     // Iniciar audio en la primera interacción del usuario (sin scroll)
-    const events = ['click', 'touchstart', 'keydown'];
+    const events = ['click', 'keydown'];
     const playOnInteraction = () => {
         startAudio();
         events.forEach(event => document.removeEventListener(event, playOnInteraction));
