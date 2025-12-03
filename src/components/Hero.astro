@@ -1,0 +1,100 @@
+<section class="hero_container">
+    <h1 class="christmas-text">Wishlist</h1>
+    <h2 class="christmas-text christmas-text--contrast">Felipe Vogt</h2>
+
+    <div class="audio-player">
+        <audio id="bg-audio" src="/assets/audios/background.mp3" loop></audio>
+        <button id="play-btn" aria-label="Reproducir música">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+        </button>
+    </div>
+</section>
+
+<script>
+    const audio = document.getElementById('bg-audio') as HTMLAudioElement;
+    const playBtn = document.getElementById('play-btn') as HTMLButtonElement;
+    
+    // Establecer volumen al 50%
+    audio.volume = 0.5;
+    
+    let isPlaying = false;
+
+    const startAudio = () => {
+        if (!isPlaying) {
+            audio.play().catch(() => {
+                // Ignorar errores de autoplay
+            });
+            isPlaying = true;
+            playBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
+        }
+    };
+
+    playBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            audio.pause();
+            playBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        } else {
+            audio.play();
+            playBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
+        }
+        isPlaying = !isPlaying;
+    });
+
+    // Iniciar audio en la primera interacción del usuario (sin scroll)
+    const events = ['click', 'touchstart', 'keydown'];
+    const playOnInteraction = () => {
+        startAudio();
+        events.forEach(event => document.removeEventListener(event, playOnInteraction));
+    };
+    
+    events.forEach(event => document.addEventListener(event, playOnInteraction, { once: true }));
+</script>
+
+<style lang="scss">
+    .hero_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 200px 0px;
+
+        h1 {
+            font-size: clamp(3rem, 15vw, 16rem);
+            margin: 10px 0;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 6vw, 4rem);
+            margin: 10px 0;
+        }
+    }
+
+    .audio-player {
+        margin-top: 40px;
+
+        button {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+            &:hover {
+                transform: scale(1.1);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            }
+
+            svg {
+                color: #c41e3a;
+            }
+        }
+    }
+</style>

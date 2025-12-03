@@ -1,0 +1,17 @@
+<div class="lights_container"></div>
+
+<style lang="scss">
+    .lights_container {
+        z-index: 2;
+        width: 100%;
+        height: clamp(10px, 10vw, 150px);
+        background-image: url("/assets/christmas-lights.gif");
+        background-repeat: repeat-x;
+        background-size: auto 100%;
+        background-position: top left;
+        position: fixed;
+        filter: drop-shadow(0px 8px 15px rgba(0, 0, 0, 0.4))
+            drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 0.9;
+    }
+</style>
